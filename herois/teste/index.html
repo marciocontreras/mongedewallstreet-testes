@@ -77,7 +77,7 @@ var Q=[
  ['Pensando num negócio, num investimento ou num jeito de fazer algo render.','Pensando num negócio, num investimento ou num jeito de fazer algo render.','M'],
  ['Fazendo algo com as mãos: cozinhando, consertando, criando, cuidando.','Fazendo algo com as mãos: cozinhando, consertando, criando, cuidando.','A']]],
 ['Bloco 3 · Impressões de vida'],
-['Quando você era criança, pelo que os adultos mais chamavam a sua atenção?','Quando {N} era criança (pelo que você sabe), pelo que os adultos mais chamavam a atenção?',[
+['Quando você era criança, qual destes comentários você mais ouvia dos adultos sobre o seu jeito de ser?','Quando {N} era criança (pelo que você sabe), qual destes comentários {N} mais ouvia dos adultos sobre o seu jeito de ser?',[
  ['"Pergunta demais", "vive com a cara nos livros".','"Pergunta demais", "vive com a cara nos livros".','S'],
  ['"Mandão(ona)", "se mete nas brigas dos outros".','"Mandão(ona)", "se mete nas brigas dos outros".','G'],
  ['"Vive negociando", "só pensa em trocar e juntar".','"Vive negociando", "só pensa em trocar e juntar".','M'],
@@ -88,9 +88,9 @@ var Q=[
  ['Ter construído patrimônio, um negócio ou algo que gera renda e emprego.','Ter construído patrimônio, um negócio ou algo que gera renda e emprego.','M'],
  ['Ter feito com as próprias mãos algo bonito ou útil que está aí até hoje.','Ter feito com as próprias mãos algo bonito ou útil que está aí até hoje.','A']]],
 ['As pessoas que convivem com você há anos te procuram principalmente para:','As pessoas que convivem com {N} há anos procuram {N} principalmente para:',[
- ['Pedir uma orientação ou entender uma situação.','Pedir uma orientação ou entender uma situação.','S'],
+ ['Pedir que eu explique algo que não entendem, ou que eu ajude a pensar uma decisão difícil.','Pedir que {N} explique algo que não entendem, ou que ajude a pensar uma decisão difícil.','S'],
  ['Pedir ajuda num conflito ou numa injustiça.','Pedir ajuda num conflito ou numa injustiça.','G'],
- ['Pedir conselho sobre dinheiro, negócio ou oportunidade.','Pedir conselho sobre dinheiro, negócio ou oportunidade.','M'],
+ ['Mostrar uma ideia de negócio ou perguntar se vale a pena investir dinheiro em algo.','Mostrar uma ideia de negócio ou perguntar se vale a pena investir dinheiro em algo.','M'],
  ['Pedir uma mão para fazer, consertar ou organizar algo.','Pedir uma mão para fazer, consertar ou organizar algo.','A']]],
 ['Bloco 4 · Sinais do corpo'],
 ['Depois de um dia em que você foi muito bem, o que mais te deixou cansado(a), mesmo dando certo?','Depois de um dia em que foi muito bem, o que mais costuma cansar {N}, mesmo dando certo?',[
@@ -126,7 +126,7 @@ function quiz(modo,done){
   if(q.length===1){h+='<h3>'+q[0]+'</h3>';return}
   var i=qi++;var t=modo==='o'?q[1].split('{N}').join(esc(nome)):q[0];
   var ops=shuffle(q[2],i*7+3);
-  h+='<div class="q"><p>'+(i+1)+'. '+t+'</p><div data-i="'+i+'">'+ops.map(function(o){return '<button type="button" class="opt" data-h="'+o[2]+'">'+(modo==='o'?o[1]:o[0])+'</button>'}).join('')+'</div></div>';
+  h+='<div class="q"><p>'+(i+1)+'. '+t+'</p><div data-i="'+i+'">'+ops.map(function(o){return '<button type="button" class="opt" data-h="'+o[2]+'">'+(modo==='o'?o[1].split('{N}').join(esc(nome)):o[0])+'</button>'}).join('')+'</div></div>';
  });
  h+='<p class="prog" id="mws-prog">0 de '+QS.length+' respondidas</p><button class="btn" id="mws-go" type="button">Ver resultado</button>';
  app.innerHTML=h;
