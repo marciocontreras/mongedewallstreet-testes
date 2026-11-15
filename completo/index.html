@@ -1,0 +1,193 @@
+<!DOCTYPE html><html lang="pt-BR"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Diagnóstico completo — O Monge de Wall Street</title></head><body style="background:#FBF7EF;padding:24px 14px;margin:0"><div id="mws-quiz" style="max-width:660px;margin:0 auto;font-family:Georgia,'Palatino Linotype',serif;color:#2b2b2b;line-height:1.55"><style>
+#mws-quiz h2{font-size:26px;color:#8C5226;margin:0 0 8px}
+#mws-quiz h3{font-size:18px;color:#A66B3C;margin:26px 0 4px;letter-spacing:.5px}
+#mws-quiz .muted{color:#6b5b3a;font-size:15px}
+#mws-quiz .q{background:#F0E4D4;border-left:4px solid #A66B3C;padding:14px 16px;margin:14px 0;border-radius:6px}
+#mws-quiz .q p{margin:0 0 10px;font-size:17px}
+#mws-quiz .opt{display:block;width:100%;text-align:left;border:1px solid #A66B3C;background:#fff;color:#3a2a1a;padding:10px 12px;border-radius:6px;cursor:pointer;font-size:15px;font-family:inherit;margin:6px 0}
+#mws-quiz .opt.on{background:#A66B3C;color:#fff}
+#mws-quiz .btn{display:inline-block;background:#8C5226;color:#fff;border:0;padding:12px 22px;border-radius:6px;font-size:16px;cursor:pointer;font-family:inherit;text-decoration:none;margin:6px 6px 6px 0}
+#mws-quiz .btn.alt{background:#fff;color:#8C5226;border:1px solid #8C5226}
+#mws-quiz .bar{height:14px;background:#eadbc6;border-radius:7px;overflow:hidden;margin:4px 0 2px}
+#mws-quiz .bar i{display:block;height:100%;background:#A66B3C}
+#mws-quiz .bar.o i{background:#2F4A3A}
+#mws-quiz .top{border:2px solid #A66B3C;border-radius:8px;padding:12px 16px;margin:12px 0;background:#fffaf3}
+#mws-quiz .desc{border-left:3px solid #d8c2a3;padding:6px 12px;margin:10px 0;font-size:15px}
+#mws-quiz input{padding:10px;border:1px solid #A66B3C;border-radius:6px;font-size:16px;width:100%;box-sizing:border-box;font-family:inherit}
+#mws-quiz .prog{font-size:14px;color:#6b5b3a;margin:6px 0}
+#mws-quiz .opts{display:flex;flex-wrap:wrap;gap:6px}#mws-quiz .opts button{flex:1 1 90px;border:1px solid #A66B3C;background:#fff;color:#8C5226;padding:8px 6px;border-radius:6px;cursor:pointer;font-size:14px;font-family:inherit}#mws-quiz .opts button.on{background:#A66B3C;color:#fff}#mws-quiz .row{margin:10px 0}</style><div id="mws-app"></div></div><script>
+(function(){
+var P=[
+ {k:'ais',n:'Aisvarya',pt:'comando',d:'Liderança, organização e condução. Você floresce quando dirige pessoas e projetos e coloca cada um no lugar certo.'},
+ {k:'sri',n:'Sri',pt:'magnetismo',d:'Beleza e liderança pela admiração. Você floresce quando o trabalho enche a vida de beleza ou quando as pessoas o seguem sem que você precise mandar.'},
+ {k:'jna',n:'Jnana',pt:'sabedoria',d:'Conhecimento e compreensão. Você floresce quando o trabalho o obriga a continuar aprendendo, pesquisando e entendendo o porquê das coisas.'},
+ {k:'vir',n:'Virya',pt:'vigor',d:'Força e saúde. Você floresce quando o trabalho exige o corpo, o movimento, ou traz saúde para a sua própria vida.'},
+ {k:'yas',n:'Yasa',pt:'credibilidade',d:'Confiança e reputação dentro de uma comunidade estável. Você floresce em time, sendo reconhecido pelas mesmas pessoas ao longo do tempo.'},
+ {k:'vai',n:'Vairagya',pt:'desapego',d:'Liberdade, autonomia e simplicidade. Você floresce quando tem espaço para decidir o próprio rumo, tempo livre e poucas amarras.'}
+];
+// Afirmações factuais (o que você FAZ, não o que você acha). {e:'eu', o:'outra pessoa sobre X'}
+var Q=[
+ ['ais','Quando um grupo fica sem direção, sou eu quem organiza as tarefas e distribui os papéis.','Quando um grupo fica sem direção, é {N} quem organiza as tarefas e distribui os papéis.'],
+ ['ais','No tempo livre, acabo coordenando coisas: a viagem da família, o evento dos amigos, o projeto do condomínio.','No tempo livre, {N} acaba coordenando coisas: viagens, eventos, projetos coletivos.'],
+ ['ais','Saio energizado(a) de reuniões em que preciso decidir e conduzir pessoas.','{N} sai energizado(a) de situações em que precisa decidir e conduzir pessoas.'],
+ ['sri','Gasto dinheiro sem culpa com coisas bonitas: arte, música, design, natureza, a estética da casa.','{N} gasta dinheiro sem culpa com coisas bonitas: arte, música, design, natureza, estética.'],
+ ['sri','As pessoas me procuram, me seguem ou querem estar perto de mim sem que eu precise pedir.','As pessoas procuram {N}, seguem ou querem estar perto sem que {N} precise pedir.'],
+ ['sri','Reparo na beleza das coisas (um ambiente, uma apresentação, uma imagem, uma paisagem) e me sinto mais vivo(a) quando posso cuidar dela.','{N} repara na beleza das coisas (um ambiente, uma apresentação, uma imagem, uma paisagem) e fica mais vivo(a) quando pode cuidar dela.'],
+ ['jna','Compro ou leio livros, cursos ou podcasts sobre assuntos que ninguém me pediu para estudar.','{N} compra ou lê livros, cursos ou podcasts sobre assuntos que ninguém pediu para estudar.'],
+ ['jna','Quando algo dá errado, a primeira coisa que faço é tentar entender por que aconteceu.','Quando algo dá errado, a primeira coisa que {N} faz é tentar entender por que aconteceu.'],
+ ['jna','Perco a noção do tempo explicando como alguma coisa funciona para alguém.','{N} perde a noção do tempo explicando como alguma coisa funciona para alguém.'],
+ ['vir','Pratico atividade física com regularidade e fico irritado(a) ou apagado(a) quando fico dias sem.','{N} pratica atividade física com regularidade e fica diferente quando passa dias sem.'],
+ ['vir','Minhas melhores memórias envolvem o corpo: esporte, trilha, trabalho físico, movimento.','As melhores histórias de {N} envolvem o corpo: esporte, trilha, trabalho físico, movimento.'],
+ ['vir','Um dia inteiro sentado(a) me esgota mais do que um dia de esforço físico.','Um dia inteiro sentado(a) esgota {N} mais do que um dia de esforço físico.'],
+ ['yas','Rendo mais quando faço parte de um time estável, que se conhece e se reconhece há tempo.','{N} rende mais quando faz parte de um time estável, que se conhece há tempo.'],
+ ['yas','Ser reconhecido(a) pelas pessoas com quem convivo há anos me move mais do que dinheiro.','Ser reconhecido(a) pelas pessoas com quem convive há anos move {N} mais do que dinheiro.'],
+ ['yas','Cuido para cumprir o que prometo ao meu grupo, mesmo quando isso me custa caro.','{N} cumpre o que promete ao grupo, mesmo quando isso custa caro.'],
+ ['vai','Uma das coisas de que mais reclamo é falta de tempo, de espaço ou de liberdade para decidir.','Uma das coisas de que {N} mais reclama é falta de tempo, espaço ou liberdade para decidir.'],
+ ['vai','Viajar sem roteiro, pegar a estrada ou ter um dia sem compromisso me recarrega como poucas coisas.','Viajar sem roteiro, pegar a estrada ou ter um dia livre recarrega {N} como poucas coisas.'],
+ ['vai','Consigo viver bem com pouco e me sinto preso(a) quando a agenda é decidida por outros.','{N} vive bem com pouco e se sente preso(a) quando a agenda é decidida por outros.']
+];
+var L=['Nunca','Raramente','Às vezes','Com frequência','Sempre'];
+var H={
+ S:{n:'o Sábio',c:'Cabeça',p:'É verdadeiro? É sábio?',d:'A sua alegria vem de entender. Você enxerga o todo, quer saber por que as coisas são como são e se realiza quando ajuda os outros a enxergar também, ensinando ou orientando.',x:'Você descartou o Sábio porque, diante de um problema, entender o porquê não é o que mais te move: você prefere agir, proteger, fazer crescer ou construir.'},
+ G:{n:'o Governante',c:'Braços',p:'É justo? É honrado?',d:'A sua alegria vem de proteger. Você corre em direção ao problema que os outros evitam, defende o que é justo e aceita pagar um preço pessoal para que ninguém fique para trás.',x:'Você descartou o Governante porque a injustiça te incomoda, mas não é ela que te faz correr para o incêndio: o seu impulso é outro.'},
+ M:{n:'o Mercador',c:'Estômago',p:'É produtivo? É sustentável?',d:'A sua alegria vem de fazer a riqueza crescer e circular. Você enxerga oportunidade onde outros veem risco, pensa no longo prazo e gera emprego, recurso e continuidade.',x:'Você descartou o Mercador porque crescer, negociar e expandir não te dá energia por si só: para você, o resultado é meio, não o fim.'},
+ A:{n:'o Artífice',c:'Pernas',p:'Ajuda alguém? Funciona? É belo?',d:'A sua alegria é concreta: "fui eu que fiz". Você se realiza construindo, cuidando e embelezando algo que serve a alguém e que pode ser tocado com as mãos.',x:'Você descartou o Artífice porque a satisfação de "fui eu que fiz" não é o que mais te preenche: você precisa de algo além da obra pronta.'}
+};
+var K=['S','G','M','A'];
+// Cada pergunta: [texto eu, texto outro, [[opção eu, opção outro, herói],...]]
+var QH=[
+['Bloco 1 · Valores'],
+['Uma decisão importante precisa ser tomada no seu trabalho. Qual pergunta aparece primeiro na sua cabeça?','Quando {N} precisa tomar uma decisão importante, qual pergunta aparece primeiro?',[
+ ['Isso é verdade? Entendemos de fato o problema?','Isso é verdade? Entendemos de fato o problema?','S'],
+ ['Isso é justo com quem vai ser afetado?','Isso é justo com quem vai ser afetado?','G'],
+ ['Isso gera resultado e se sustenta no longo prazo?','Isso gera resultado e se sustenta no longo prazo?','M'],
+ ['Isso vai funcionar bem na prática e ajudar quem vai usar?','Isso vai funcionar bem na prática e ajudar quem vai usar?','A']]],
+['Você descobre que um colega fez algo errado que prejudicou um cliente. Qual é a sua reação mais natural?','Quando {N} descobre que alguém fez algo errado que prejudicou um terceiro, qual é a reação mais natural?',[
+ ['Quero entender por que aconteceu e o que no sistema permitiu isso.','Quer entender por que aconteceu e o que no sistema permitiu isso.','S'],
+ ['Quero que o erro seja corrigido e que a pessoa responda por ele, mesmo que isso me custe.','Quer que o erro seja corrigido e que a pessoa responda por ele, mesmo que isso custe caro.','G'],
+ ['Quero recuperar o cliente e evitar que o prejuízo cresça.','Quer recuperar o cliente e evitar que o prejuízo cresça.','M'],
+ ['Quero arregaçar as mangas e consertar pessoalmente o que foi feito.','Arregaça as mangas e conserta pessoalmente o que foi feito.','A']]],
+['Qual destes elogios mais te tocaria?','Qual destes elogios mais tocaria {N}?',[
+ ['"Você me ajudou a enxergar o que eu não via."','"Você me ajudou a enxergar o que eu não via."','S'],
+ ['"Você me defendeu quando ninguém mais defendeu."','"Você me defendeu quando ninguém mais defendeu."','G'],
+ ['"Você fez isso crescer e deu trabalho a muita gente."','"Você fez isso crescer e deu trabalho a muita gente."','M'],
+ ['"O que você fez ficou lindo e funciona perfeitamente."','"O que você fez ficou lindo e funciona perfeitamente."','A']]],
+['O que mais te incomoda no trabalho?','O que mais incomoda {N} no trabalho?',[
+ ['Decisões tomadas sem entender o problema, ou meias-verdades ditas para agradar.','Decisões tomadas sem entender o problema, ou meias-verdades ditas para agradar.','S'],
+ ['Ver alguém sendo tratado com injustiça e ninguém fazendo nada.','Ver alguém sendo tratado com injustiça e ninguém fazendo nada.','G'],
+ ['Desperdício, oportunidade perdida, dinheiro parado.','Desperdício, oportunidade perdida, dinheiro parado.','M'],
+ ['Trabalho malfeito, entrega descuidada, coisa que não funciona.','Trabalho malfeito, entrega descuidada, coisa que não funciona.','A']]],
+['Bloco 2 · Como você age'],
+['A casa está pegando fogo, no sentido figurado: uma crise séria no seu trabalho. O que você faz primeiro?','Numa crise séria no trabalho, o que {N} faz primeiro?',[
+ ['Paro para entender a causa antes de agir.','Para e tenta entender a causa antes de agir.','S'],
+ ['Assumo a linha de frente e protejo as pessoas envolvidas.','Assume a linha de frente e protege as pessoas envolvidas.','G'],
+ ['Calculo o impacto e procuro a saída que preserve o negócio.','Calcula o impacto e procura a saída que preserve o negócio.','M'],
+ ['Coloco a mão na massa para resolver o problema concreto.','Coloca a mão na massa para resolver o problema concreto.','A']]],
+['Quando você lidera um grupo, o que você mais faz?','Quando {N} lidera um grupo, o que mais faz?',[
+ ['Explico o porquê das coisas e oriento cada um.','Explica o porquê das coisas e orienta cada um.','S'],
+ ['Defendo o time e garanto regras justas para todos.','Defende o time e garante regras justas para todos.','G'],
+ ['Defino metas, busco oportunidades e faço o resultado crescer.','Define metas, busca oportunidades e faz o resultado crescer.','M'],
+ ['Dou o exemplo fazendo junto e cuido da qualidade da entrega.','Dá o exemplo fazendo junto e cuida da qualidade da entrega.','A']]],
+['Numa negociação difícil, o que você faz com mais naturalidade?','Numa negociação difícil, o que {N} faz com mais naturalidade?',[
+ ['Tento entender o que o outro lado realmente quer e por quê.','Tenta entender o que o outro lado realmente quer e por quê.','S'],
+ ['Defendo o que é correto, mesmo que isso me custe o acordo.','Defende o que é correto, mesmo que isso custe o acordo.','G'],
+ ['Busco o melhor resultado e uma relação que renda por anos.','Busca o melhor resultado e uma relação que renda por anos.','M'],
+ ['Mostro com cuidado a qualidade do que estou entregando.','Mostra com cuidado a qualidade do que está entregando.','A']]],
+['Você ganha um dia inteiro livre, sem ninguém te cobrar nada. Como ele costuma terminar?','Quando {N} tem um dia inteiro livre, como ele costuma terminar?',[
+ ['Lendo, estudando ou conversando sobre uma ideia que me intrigou.','Lendo, estudando ou conversando sobre uma ideia que intrigou.','S'],
+ ['Resolvendo o problema de alguém, de um amigo, da família ou da comunidade.','Resolvendo o problema de alguém, de um amigo, da família ou da comunidade.','G'],
+ ['Pensando num negócio, num investimento ou num jeito de fazer algo render.','Pensando num negócio, num investimento ou num jeito de fazer algo render.','M'],
+ ['Fazendo algo com as mãos: cozinhando, consertando, criando, cuidando.','Fazendo algo com as mãos: cozinhando, consertando, criando, cuidando.','A']]],
+['Bloco 3 · Impressões de vida'],
+['Quando você era criança, qual destes comentários você mais ouvia dos adultos sobre o seu jeito de ser?','Quando {N} era criança (pelo que você sabe), qual destes comentários {N} mais ouvia dos adultos sobre o seu jeito de ser?',[
+ ['"Pergunta demais", "vive com a cara nos livros".','"Pergunta demais", "vive com a cara nos livros".','S'],
+ ['"Mandão(ona)", "se mete nas brigas dos outros".','"Mandão(ona)", "se mete nas brigas dos outros".','G'],
+ ['"Vive negociando", "só pensa em trocar e juntar".','"Vive negociando", "só pensa em trocar e juntar".','M'],
+ ['"Não para quieto(a)", "desmonta tudo", "vive desenhando".','"Não para quieto(a)", "desmonta tudo", "vive desenhando".','A']]],
+['Pense na conquista de que você mais se orgulha. Ela é mais parecida com:','Pense na conquista de que {N} mais se orgulha. Ela é mais parecida com:',[
+ ['Ter entendido algo difícil ou ter mudado a forma de alguém ver o mundo.','Ter entendido algo difícil ou ter mudado a forma de alguém ver o mundo.','S'],
+ ['Ter protegido alguém ou ter feito o certo quando era arriscado.','Ter protegido alguém ou ter feito o certo quando era arriscado.','G'],
+ ['Ter construído patrimônio, um negócio ou algo que gera renda e emprego.','Ter construído patrimônio, um negócio ou algo que gera renda e emprego.','M'],
+ ['Ter feito com as próprias mãos algo bonito ou útil que está aí até hoje.','Ter feito com as próprias mãos algo bonito ou útil que está aí até hoje.','A']]],
+['As pessoas que convivem com você há anos te procuram principalmente para:','As pessoas que convivem com {N} há anos procuram {N} principalmente para:',[
+ ['Pedir que eu explique algo que não entendem, ou que eu ajude a pensar uma decisão difícil.','Pedir que {N} explique algo que não entendem, ou que ajude a pensar uma decisão difícil.','S'],
+ ['Pedir ajuda num conflito ou numa injustiça.','Pedir ajuda num conflito ou numa injustiça.','G'],
+ ['Mostrar uma ideia de negócio ou perguntar se vale a pena investir dinheiro em algo.','Mostrar uma ideia de negócio ou perguntar se vale a pena investir dinheiro em algo.','M'],
+ ['Pedir uma mão para fazer, consertar ou organizar algo.','Pedir uma mão para fazer, consertar ou organizar algo.','A']]],
+['Bloco 4 · Sinais do corpo'],
+['Depois de um dia em que você foi muito bem, o que mais te deixou cansado(a), mesmo dando certo?','Depois de um dia em que foi muito bem, o que mais costuma cansar {N}, mesmo dando certo?',[
+ ['Ter que esconder ou dourar uma informação para não perder a venda.','Ter que esconder ou dourar uma informação para não perder a venda.','S'],
+ ['Ter que ficar calado(a) diante de algo que eu achava errado.','Ter que ficar calado(a) diante de algo que achava errado.','G'],
+ ['Ter que gastar energia em algo que não ia dar retorno.','Ter que gastar energia em algo que não ia dar retorno.','M'],
+ ['Ter passado o dia em reuniões sem produzir nada concreto.','Ter passado o dia em reuniões sem produzir nada concreto.','A']]],
+['Qual destas situações faz você perder a noção do tempo?','Qual destas situações faz {N} perder a noção do tempo?',[
+ ['Explicar como algo funciona para alguém que quer entender.','Explicar como algo funciona para alguém que quer entender.','S'],
+ ['Resolver um conflito difícil e ver as pessoas protegidas.','Resolver um conflito difícil e ver as pessoas protegidas.','G'],
+ ['Desenhar um negócio, fazer contas, enxergar uma oportunidade.','Desenhar um negócio, fazer contas, enxergar uma oportunidade.','M'],
+ ['Construir, criar ou cuidar de algo até ficar pronto.','Construir, criar ou cuidar de algo até ficar pronto.','A']]],
+['Se você pudesse escolher, como gostaria de ser lembrado(a)?','Como você acha que {N} gostaria de ser lembrado(a)?',[
+ ['Como alguém que ajudou os outros a entender a vida.','Como alguém que ajudou os outros a entender a vida.','S'],
+ ['Como alguém que lutou pelo que era certo.','Como alguém que lutou pelo que era certo.','G'],
+ ['Como alguém que construiu algo que prosperou e durou.','Como alguém que construiu algo que prosperou e durou.','M'],
+ ['Como alguém que fez coisas bonitas e úteis para os outros.','Como alguém que fez coisas bonitas e úteis para os outros.','A']]]
+];
+
+var QS=QH.filter(function(q){return q.length===3});
+var app=document.getElementById('mws-app');
+var qs=new URLSearchParams(location.search);
+var nome=qs.get('para'),eu=qs.get('eu'),obs=qs.getAll('o');
+function esc(s){return String(s||'').replace(/[<>&"]/g,function(c){return{'<':'&lt;','>':'&gt;','&':'&amp;','"':'&quot;'}[c]})}
+function base(){return location.origin+location.pathname}
+function cap(s){return s.charAt(0).toUpperCase()+s.slice(1)}
+function enc(r){return P.map(function(p){return r.p[p.k]}).concat(K.map(function(k){return r.h[k]})).join('.')}
+function dec(t){var a=(t||'').split('.').map(Number),r={p:{},h:{}};P.forEach(function(p,i){r.p[p.k]=a[i]||0});K.forEach(function(k,i){r.h[k]=a[6+i]||0});return r}
+function shuffle(a,seed){a=a.slice();for(var i=a.length-1;i>0;i--){seed=(seed*9301+49297)%233280;var j=Math.floor(seed/233280*(i+1));var t=a[i];a[i]=a[j];a[j]=t}return a}
+function quiz(modo,done){
+ var A1=Q.map(function(){return -1}),A2={},h='',n=esc(nome);
+ h+=modo==='o'?'<h2>O diagnóstico de '+n+'</h2><p class="muted">'+n+' pediu a sua ajuda. Responda pensando no que você já viu '+n+' fazer, não no que você acha. Leva uns 12 minutos.</p>':'<h2>Diagnóstico completo</h2><p class="muted">Do livro <i>O Monge de Wall Street</i>. Duas partes: os seis poderes (18 afirmações) e os quatro heróis (14 perguntas). Responda com fatos: o que você <b>faz</b>, não o que gostaria de ser. Uns 12 minutos.</p>';
+ h+='<h3>Parte 1 · Os seis poderes</h3><p class="muted">Com que frequência isto acontece?</p>';
+ Q.forEach(function(q,i){var t=modo==='o'?q[2].split('{N}').join(n):q[1];h+='<div class="q"><p>'+(i+1)+'. '+t+'</p><div class="opts" data-a="'+i+'">'+L.map(function(l,j){return '<button type="button" data-j="'+j+'">'+l+'</button>'}).join('')+'</div></div>'});
+ h+='<h3>Parte 2 · Os quatro heróis</h3><p class="muted">Escolha a opção mais parecida com o que '+(modo==='o'?n+' faz':'você faz')+', mesmo que mais de uma se aplique.</p>';
+ var qi=0;QH.forEach(function(q){if(q.length===1){h+='<p class="muted" style="margin-top:18px"><b>'+q[0]+'</b></p>';return}var i=qi++;var t=modo==='o'?q[1].split('{N}').join(n):q[0];h+='<div class="q"><p>'+(19+i)+'. '+t+'</p><div data-b="'+i+'">'+shuffle(q[2],i*7+3).map(function(o){return '<button type="button" class="opt" data-h="'+o[2]+'">'+(modo==='o'?o[1].split('{N}').join(n):o[0])+'</button>'}).join('')+'</div></div>'});
+ var tot=Q.length+QS.length;
+ h+='<p class="prog" id="mws-prog">0 de '+tot+' respondidas</p><button class="btn" id="mws-go" type="button">Ver resultado</button>';
+ app.innerHTML=h;
+ function prog(){var c=A1.filter(function(a){return a>=0}).length+Object.keys(A2).length;var p=document.getElementById('mws-prog');p.style.color='';p.textContent=c+' de '+tot+' respondidas'}
+ app.querySelectorAll('[data-a]').forEach(function(o){o.addEventListener('click',function(e){var b=e.target.closest('button');if(!b)return;A1[+o.dataset.a]=+b.dataset.j;o.querySelectorAll('button').forEach(function(x){x.classList.toggle('on',x===b)});prog()})});
+ app.querySelectorAll('[data-b]').forEach(function(o){o.addEventListener('click',function(e){var b=e.target.closest('button');if(!b)return;A2[o.dataset.b]=b.dataset.h;o.querySelectorAll('button').forEach(function(x){x.classList.toggle('on',x===b)});prog()})});
+ document.getElementById('mws-go').onclick=function(){var p=document.getElementById('mws-prog');var f=A1.indexOf(-1);if(f>=0){p.textContent='Falta responder a afirmação '+(f+1)+'.';p.style.color='#a33';return}for(var i=0;i<QS.length;i++)if(!A2[i]){p.textContent='Falta responder a pergunta '+(19+i)+'.';p.style.color='#a33';return}
+  var sp={};P.forEach(function(x){sp[x.k]=0});Q.forEach(function(q,i){sp[q[0]]+=A1[i]+1});P.forEach(function(x){sp[x.k]=Math.round((sp[x.k]-3)/12*100)});
+  var sh={S:0,G:0,M:0,A:0};Object.keys(A2).forEach(function(k){sh[A2[k]]++});K.forEach(function(k){sh[k]=Math.round(sh[k]/QS.length*100)});
+  done({p:sp,h:sh});window.scrollTo(0,0)};
+}
+function avgOf(list,part,keys){var a={};keys.forEach(function(k){var t=0;list.forEach(function(o){t+=o[part][k]});a[k]=Math.round(t/list.length)});return a}
+function result(me,others){
+ var pk=P.map(function(p){return p.k});
+ var oP=others.length?avgOf(others,'p',pk):null,oH=others.length?avgOf(others,'h',K):null;
+ var cP={},cH={};pk.forEach(function(k){cP[k]=oP?Math.round((me.p[k]+oP[k])/2):me.p[k]});K.forEach(function(k){cH[k]=oH?Math.round((me.h[k]+oH[k])/2):me.h[k]});
+ var ordP=P.slice().sort(function(a,b){return cP[b.k]-cP[a.k]}),ordH=K.slice().sort(function(a,b){return cH[b]-cH[a]});
+ var her=ordH[0],top=ordP.slice(0,ordP[2]&&cP[ordP[2].k]>=cP[ordP[1].k]-10?3:2),low=ordP.slice(-2);
+ var o='<h2>O seu mapa</h2><p class="muted">'+(others.length?'Combinando a sua visão com a de '+others.length+' pessoa(s) que convive(m) com você.':'Esta é a sua autoavaliação. Ela fica mais precisa quando outras pessoas também respondem (veja no fim).')+'</p>';
+ o+='<div class="top"><b style="font-size:21px">'+cap(H[her].n)+' com '+top.map(function(p){return p.n+' ('+p.pt+')'}).join(' e ')+'</b><p style="margin:8px 0 0">O seu herói é <i>quem</i> você é em campo; os seus poderes são <i>com o que</i> você joga.</p></div>';
+ o+='<h3>O seu herói: '+H[her].n+'</h3><p><i>A pergunta que guia você: "'+H[her].p+'"</i></p><p>'+H[her].d+'</p>';
+ if(cH[ordH[0]]-cH[ordH[1]]<15)o+='<div class="desc"><b>Atenção:</b> '+H[ordH[0]].n+' e '+H[ordH[1]].n+' ficaram próximos. Ninguém tem a natureza de dois heróis; quase sempre um deles é um jeito aprendido com a família, um chefe admirado ou a profissão. A visão de quem convive com você costuma desempatar.</div>';
+ o+='<h3>Os seus poderes</h3>';top.forEach(function(p){o+='<div class="desc"><b>'+p.n+' ('+p.pt+')</b>. '+p.d+'</div>'});
+ o+='<h3>Onde você pode estar jogando com o poder de outra pessoa</h3><p>Os poderes que menos aparecem em você são <b>'+low.map(function(p){return p.n+' ('+p.pt+')'}).join('</b> e <b>')+'</b>. Se o seu trabalho pede principalmente estes, você provavelmente está fazendo bem uma coisa com o poder de alguém, e pagando o preço em energia. Pergunte-se: quanto da minha semana passa aqui? E quem, no meu time, nasceu com estes poderes?</p>';
+ o+='<h3>'+(others.length?'O que os outros enxergam':'Você só se identificou com o Daniel?')+'</h3>';
+ if(others.length){var gaps=P.filter(function(p){return Math.abs(me.p[p.k]-oP[p.k])>=25});o+=gaps.length?'<p>Onde a sua visão e a dos outros mais discordam: <b>'+gaps.map(function(p){return p.n+' ('+p.pt+') — você '+me.p[p.k]+'%, os outros '+oP[p.k]+'%'}).join('; ')+'</b>. É ali que costuma estar o ponto cego.</p>':'<p>A sua visão e a dos outros estão alinhadas. Bom sinal: os seus poderes não são só identificação com a história, aparecem na sua vida.</p>'}
+ else o+='<p>Ler um livro faz a gente se reconhecer no personagem. A única forma de saber se estes poderes são seus de fato é perguntar a quem convive com você. Envie o link abaixo para três pessoas.</p>';
+ o+='<h3>Os detalhes</h3>';ordP.forEach(function(p){o+='<div class="row"><b>'+p.n+' ('+p.pt+')</b><div class="bar"><i style="width:'+me.p[p.k]+'%"></i></div>'+(oP?'<div class="bar o"><i style="width:'+oP[p.k]+'%"></i></div>':'')+'</div>'});
+ ordH.forEach(function(k){o+='<div class="row"><b>'+cap(H[k].n)+'</b><div class="bar"><i style="width:'+me.h[k]+'%"></i></div>'+(oH?'<div class="bar o"><i style="width:'+oH[k]+'%"></i></div>':'')+'</div>'});
+ if(others.length)o+='<p class="muted"><span style="color:#A66B3C">■</span> você &nbsp; <span style="color:#2F4A3A">■</span> quem convive com você</p>';
+ o+='<h3>Confirme com quem convive com você</h3><input id="mws-nome" placeholder="Seu primeiro nome"><p><button class="btn" id="mws-share" type="button">Gerar link para enviar</button></p><p id="mws-link" class="muted" style="word-break:break-all"></p>';
+ var self=base()+'?eu='+enc(me)+others.map(function(x){return '&o='+enc(x)}).join('');
+ o+='<p class="muted" style="margin-top:20px">Guarde este link para voltar ao seu resultado e somar as respostas que chegarem:</p><p class="muted" style="word-break:break-all"><a href="'+self+'">'+self+'</a></p>';
+ o+='<h3>O próximo passo</h3><p>Leve este mapa para a Matriz de Realinhamento (Capítulo 8) e para o Painel de Uma Página (Capítulo 11). Se quiser fazer esse caminho acompanhado, conheça o <b>Programa O Monge de Wall Street</b>.</p><p><a class="btn alt" href="https://www.mongedewallstreet.com.br">Conhecer o Programa e a Carta do Monge</a></p>';
+ app.innerHTML=o;
+ document.getElementById('mws-share').onclick=function(){var nm=document.getElementById('mws-nome').value.trim();if(!nm){document.getElementById('mws-nome').focus();return}var url=base()+'?para='+encodeURIComponent(nm)+'&eu='+enc(me);var msg='Oi! Estou fazendo o diagnóstico do livro O Monge de Wall Street e preciso da sua visão sobre mim. Leva uns 12 minutos: '+url;document.getElementById('mws-link').innerHTML='<a class="btn" target="_blank" href="https://wa.me/?text='+encodeURIComponent(msg)+'">Enviar pelo WhatsApp</a><br>ou copie: '+url};
+}
+if(nome&&eu){quiz('o',function(r){var back=base()+'?eu='+eu+obs.map(function(x){return '&o='+x}).join('')+'&o='+enc(r);var msg='Respondi o seu diagnóstico. Abra para ver o resultado combinado: '+back;app.innerHTML='<h2>Obrigado!</h2><p class="muted">Agora envie as suas respostas de volta para '+esc(nome)+'.</p><p><a class="btn" target="_blank" href="https://wa.me/?text='+encodeURIComponent(msg)+'">Enviar para '+esc(nome)+' pelo WhatsApp</a></p><p class="muted" style="word-break:break-all">ou copie: '+back+'</p><p class="muted">Quer o seu próprio diagnóstico? <a href="https://diagnostico.mongedewallstreet.com.br/">Comece aqui</a>.</p>'})}
+else if(eu){result(dec(eu),obs.map(dec))}
+else{quiz('e',function(r){result(r,[])})}
+})();
+</script></body></html>
